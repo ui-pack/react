@@ -1,0 +1,38 @@
+{
+  "name": "@ui-pack/react",
+  "version": "0.0.1",
+  "description": "UI Pack for React",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ui-pack/react.git"
+  },
+  "keywords": [
+    "ui",
+    "react",
+    "components",
+    "utility",
+    "frontend"
+  ],
+  "author": "Joseph Rex",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/ui-pack/react/issues"
+  },
+  "homepage": "https://github.com/ui-pack/react#readme",
+  "devDependencies": {
+    "@testing-library/jest-dom": "^5.11.6",
+    "@testing-library/react": "^11.2.2",
+    "@testing-library/user-event": "^12.6.0",
+    "msw": "^0.24.3"
+  },
+  "dependencies": {
+    "lodash": "^4.17.20",
+    "prop-types": "^15.7.2",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  }
+}
