@@ -1,24 +1,24 @@
-import React, { useEffect, useState } from 'react'
+import * as React from 'react'
 import PropTypes from 'prop-types'
 import _uniq from 'lodash/uniq'
 import _pick from 'lodash/pick'
 import _mapKeys from 'lodash/mapKeys'
 import _camelCase from 'lodash/camelCase'
-import useForwardedRef from '../hooks/use-forwardedref'
-import useLocalStorage from '../hooks/use-localstorage'
+import useForwardedRef from '../../hooks/use-forwardedref'
+import useLocalStorage from '../../hooks/use-localstorage'
 
 const AutosuggestInput = React.forwardRef(({
-  as: Component = "input",
-  type = "text",
-  name = "autosuggest",
+  as: Component = 'input',
+  type = 'text',
+  name = 'autosuggest',
   onBlur,
   onChange,
   onKeyDown,
   ...props
 }, ref) => {
   const [suggestionList, setSuggestionList] = useLocalStorage(name, [])
-  const [suggestion, setSuggestion] = useState("")
-  const [inputStyles, setInputStyles] = useState({})
+  const [suggestion, setSuggestion] = React.useState('')
+  const [inputStyles, setInputStyles] = React.useState({})
   const inputRef = useForwardedRef(ref)
 
   const handleBlur = event => {
@@ -56,7 +56,7 @@ const AutosuggestInput = React.forwardRef(({
   const handleKeyDown = event => {
     if(event.key === 'ArrowRight' && suggestion) {
       // Simulate change event on input while copying suggestion into it
-      var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, "value").set;
+      var nativeInputValueSetter = Object.getOwnPropertyDescriptor(window.HTMLInputElement.prototype, 'value').set;
       nativeInputValueSetter.call(inputRef.current, suggestion);
 
       var changeEvent = new Event('change', { bubbles: true });
@@ -67,7 +67,7 @@ const AutosuggestInput = React.forwardRef(({
     }
   }  
 
-  useEffect(() => {
+  React.useEffect(() => {
     /*
     * Get properties that define box model and text formatting
     */
