@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "description": "UI Pack for React",
   "main": "index.js",
+  "exports": "./src/components/index.js",
   "scripts": {
     "test": "jest"
   },

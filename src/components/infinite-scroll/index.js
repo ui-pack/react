@@ -8,7 +8,7 @@ const getIsEnded = (currentPage, pageLimit, isLoading) => (
 const InfiniteScroll = ({
   as: Component = 'div',
   loader = <div>Loading...</div>,
-  endNode = null,
+  completionNode = null,
   initialPage = 1,
   loadFunction = () => Promise.resolve([]),
   children: mapCallback,
@@ -78,7 +78,7 @@ const InfiniteScroll = ({
     <>
       <Component {...parentProps}>{items.map(mapCallback)}</Component>
       {isLoading && loader}
-      {isEnded && endNode}
+      {isEnded && completionNode}
     </>
   )
 }
@@ -89,7 +89,7 @@ InfiniteScroll.propTypes = {
   threshold: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   pageLimit: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   loader: PropTypes.node,
-  endNode: PropTypes.node,
+  completionNode: PropTypes.node,
   innerProps: PropTypes.object,
   loadFunction: PropTypes.func.isRequired,
   children: PropTypes.func.isRequired,
