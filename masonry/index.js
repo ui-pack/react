@@ -1,6 +1,5 @@
-import * as React from 'react'
-import styled, { css } from 'styled-components'
-import PropTypes from 'prop-types'
+import * as React from "react"
+import PropTypes from "prop-types"
 
 export const arrayToColumns = (arr, cols) => {
   const chunks = new Array(cols)
@@ -14,41 +13,36 @@ export const arrayToColumns = (arr, cols) => {
   return chunks
 }
 
-const GridItem = styled.div`
-  margin-bottom: 0;
-  ${({ gap, index }) => css`
-    margin-top: ${index === 0 ? index : gap}
-  `}
-`
-
-function Masonry({
-  as: Component = 'div',
+const Masonry = React.forwardRef(({
+  as: Component = "div",
   columns,
-  gap = "10px",
+  gap = "1",
   children,
+  className = "",
   style,
   ...props
-}) {
+}, ref) => {
   const childrenArray = React.Children.toArray(children)
   const transformed = arrayToColumns(childrenArray, Number(columns))
+  const classes = `grid gap-${gap} ${className}`
   const styles = {
-    display: 'grid',
     gridTemplateColumns: `repeat(${columns}, 1fr)`,
-    gap: gap,
     ...style,
   }
+  const refProp = Component instanceof Function ? {} : { ref }
   return (
-    <Component {...props} style={styles}>
+    <Component {...props} className={classes} style={styles} {...refProp}>
       {transformed.map((elements, key) => (
         <div key={key}>
           {React.Children.map(elements, (element, index) => {
-            return <GridItem gap={gap} index={index}>{element}</GridItem>
+            const topMargin = index === 0 ? index : gap
+            return <div className={`mb-0 mt-${topMargin}`}>{element}</div>
           })}
         </div>
       ))}
     </Component>
   )
-}
+})
 
 Masonry.propTypes = {
   as: PropTypes.string,
