@@ -1,9 +1,7 @@
 <div align="center">
 
 <h1>ui-pack</h1>
-<br>
-<img src="./_deps/assets/ui-pack.png" alt="ui-pack logo" width="100" height="146">
-<br><br>
+<img src="./_deps/assets/ui-pack.png" alt="ui-pack logo" width="100" height="146" style="margin: 40px 0 60px">
 </div>
 
 ## Installation
