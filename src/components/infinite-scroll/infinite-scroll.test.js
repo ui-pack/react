@@ -1,5 +1,5 @@
 import * as React from 'react'
-import { screen, render } from '@testing-library/react'
+import { screen, render, waitFor } from '@testing-library/react'
 import "@testing-library/jest-dom/extend-expect"
 import fetch from "node-fetch"
 import { rest } from "msw"
@@ -10,7 +10,7 @@ const InfiniteScrollComponent = ({ requestPath, usePage, ...props}) => {
   const fetchImages = React.useMemo(() => page => {
     // use page # if provided, if set as boolean true, use the current page passed to callback
     const path = !usePage ? requestPath : typeof usePage === 'number' ? `${requestPath}?page=${usePage}` : `${requestPath}?page=${page}`
-    return fetch(path).then(res => res.json())
+    return fetch(`http://example.com${path}`).then(res => res.json())
   }, [requestPath, usePage])
 
   return (
@@ -22,7 +22,7 @@ const InfiniteScrollComponent = ({ requestPath, usePage, ...props}) => {
 
 describe('InfiniteScroll', () => {
   const server = setupServer(
-    rest.get("/reindeers?page=1", (req, res, ctx) => {
+    rest.get('http://example.com/reindeers?page=1', (req, res, ctx) => {
       return res(ctx.json([
         {id: 1, name: 'Dasher', skill: 'Sewing'},
         {id: 2, name: 'Dancer', skill: 'Dancing'},
@@ -31,7 +31,7 @@ describe('InfiniteScroll', () => {
         {id: 5, name: 'Comet', skill: 'Good with kids'},
       ]))
     }),
-    rest.get("/reindeers?page=2", (req, res, ctx) => {
+    rest.get('http://example.com/reindeers?page=2', (req, res, ctx) => {
       return res(ctx.json([
         {id: 6, name: 'Cupid', skill: 'Bringing people together'},
         {id: 7, name: 'Donner', skill: 'Singing'},
@@ -40,7 +40,7 @@ describe('InfiniteScroll', () => {
         {id: 10, name: 'Olive', skill: 'Good at hide-and-seek'},
       ]))
     }),
-    rest.get('/elves?page=1', (req, res, ctx) => res(ctx.json([])))
+    rest.get('http://example.com/elves?page=1', (req, res, ctx) => res(ctx.json([])))
   )
 
   beforeAll(() => server.listen())
@@ -49,6 +49,19 @@ describe('InfiniteScroll', () => {
   afterEach(() => server.resetHandlers())
   // clean up once the tests are done
   afterAll(() => server.close())
+
+  it('calls the load function', async () => {
+    const fn = jest.fn().mockReturnValue(Promise.resolve([]))
+    render(
+      <InfiniteScroll loadFunction={fn} emptyMessage={<h2>Empty</h2>}>
+      {item => <div key={item}>{item}</div>}
+      </InfiniteScroll>
+    )
+
+    expect(fn).toHaveBeenCalled()
+    await waitFor(() => screen.getByRole('heading', { name: /empty/i }))
+    expect(screen.getByRole('heading', { name: /empty/i })).toBeInTheDocument()
+  })
 
   it('loads container into the document', async () => {
     render(
@@ -63,7 +76,7 @@ describe('InfiniteScroll', () => {
     expect(infiniteFeed).toBeInTheDocument()
   })
 
-  xit('loads initial container items into the document', async () => {
+  it('loads initial container items into the document', async () => {
     render(
       <InfiniteScrollComponent
         requestPath="/reindeers"
@@ -76,7 +89,7 @@ describe('InfiniteScroll', () => {
     return expect(infiniteFeed).toHaveLength(5)
   })
 
-  xit('displays empty message when there are no results', async () => {
+  it('displays empty message when there are no results', async () => {
     render(
       <InfiniteScrollComponent
         requestPath="/elves"
@@ -89,7 +102,7 @@ describe('InfiniteScroll', () => {
     expect(emptyMessage).toHaveTextContent('Empty')
   })
 
-  xit('shows error message on failed requests', async () => {
+  it('shows error message on failed requests', async () => {
     render(
       <InfiniteScrollComponent
         requestPath="/santa"
@@ -104,7 +117,7 @@ describe('InfiniteScroll', () => {
     expect(errorMessage).toHaveTextContent('Broken')
   })
 
-  xit('calls onError for failed requests', async () => {
+  it('calls onError for failed requests', async () => {
     const fn = jest.fn()
     render(
       <InfiniteScrollComponent

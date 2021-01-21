@@ -2,7 +2,7 @@
 
 <h1>ui-pack</h1>
 <br>
-<img src="./_deps/assets/ui-pack.png" alt="ui-pack logo" width="100" height="146">
+<img src="./src/assets/ui-pack.png" alt="ui-pack logo" width="100" height="146">
 <br><br>
 </div>
 
