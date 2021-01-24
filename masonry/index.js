@@ -2,10 +2,10 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _extends = require('@babel/runtime/helpers/extends');
 var React = require('react');
 require('../index-109aab05.js');
 var index = require('../index-394e2c20.js');
-var _extends = require('@babel/runtime/helpers/extends');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 

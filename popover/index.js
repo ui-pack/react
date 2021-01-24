@@ -2,14 +2,14 @@
 
 Object.defineProperty(exports, '__esModule', { value: true });
 
+var _extends = require('@babel/runtime/helpers/extends');
 var React = require('react');
 var index$1 = require('../index-109aab05.js');
-var _extends = require('@babel/runtime/helpers/extends');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
-var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 var _extends__default = /*#__PURE__*/_interopDefaultLegacy(_extends);
+var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
 
 function stylis_min(W) {
   function M(d, c, e, h, a) {

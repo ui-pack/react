@@ -40,8 +40,15 @@ export default {
       transformOutputPath: function(output, input) {
         const parentFolders = path.dirname(input).split(path.sep)
         // Remove the src/{hooks|components} directories
-        const newDestination = parentFolders.slice(2, parentFolders.length)
-        return `${newDestination.join(path.sep)}/${path.basename(output)}`
+        let newDestination = parentFolders.slice(2, parentFolders.length)
+        if(parentFolders.length === 2) {
+          newDestination = []
+        }
+        let end = `${newDestination.join(path.sep)}/${path.basename(output)}`
+        if(!newDestination.length) {
+          end = path.basename(output)
+        }
+        return end
       }
     }),
   ],
