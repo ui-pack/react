@@ -1,16 +1,15 @@
 import * as React from 'react'
+import PropTypes from 'prop-types'
+import { useTransition, animated } from 'react-spring'
 import styled, { css } from 'styled-components'
 
-// animate option
-// placement (top, bottom, right, left)
-// update clone and popover position on resize
 // probably skip on handling resize because of light dismiss
 // as described here by open-ui https://open-ui.org/components/select#light-dismiss
 // and here by MsEdge https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/Popup/explainer.md#light-dismiss
 // Light dismiss requires that
-// 1. Esc closes the dialog
+// 1. Esc closes the dialog ✅
 // 2. On blur of the window closes the dialog
-// 3. On resize closes the dialog (even though blur should before resize can happen)
+// 3. On resize closes the dialog (even though blur should before resize can happen, this handles orientation change too) ✅
 // https://codesandbox.io/s/flamboyant-sun-jyd1d?file=/src/App.js
 // KNOWN-ISSUES
 // 1. Default border color gets applied for arrow -> rgb(0,0,0) when none is set
@@ -32,10 +31,10 @@ const Backdrop = styled.div`
     `}
 `
 
-const dialogPseudoAfter = arrow => `
+const dialogPseudoAfter = (arrow) => `
   &::after {
     content: "";
-    display: ${arrow ? 'block':'none'};
+    display: ${arrow ? "block" : "none"};
     position: absolute;
     top: -7.5px;
     left: var(--left);
@@ -50,6 +49,7 @@ const dialogPseudoAfter = arrow => `
 `
 const Dialog = styled.div`
   position: absolute;
+  transform: var(--transform);
   ${({ mobileBreakpoint, arrow }) =>
     mobileBreakpoint
       ? css`
@@ -58,11 +58,12 @@ const Dialog = styled.div`
           @media (max-width: ${mobileBreakpoint}px) {
             width: 100%;
             bottom: 0;
-            top: 100px !important;
+            top: 200px !important;
             left: 0 !important;
-            border-radius: 30px 30px 0 0;
+            border-radius: 40px 40px 0 0;
             overflow-x: hidden;
             overflow-y: auto;
+            transform: var(--mobile-transform);
             > * {
               border: 0;
               box-shadow: none;
@@ -93,6 +94,7 @@ const Dialog = styled.div`
           ${dialogPseudoAfter(arrow)}
         `}
 `
+const AnimatedDialog = animated(Dialog)
 
 function useForwardedRef(ref) {
   const innerRef = React.useRef(null)
@@ -127,11 +129,14 @@ function getDialogPosition(triggerRect, dialog) {
 export function Popover({
   rootNodeSelector = "body",
   content,
+  contentId,
   toggleFunction,
   trigger,
   arrow,
   raised,
-  mobileBreakpoint
+  mobileBreakpoint,
+  anchor,
+  style
 }) {
   const rootNode = document.querySelector(rootNodeSelector)
   const triggerRect = React.useRef({})
@@ -167,19 +172,24 @@ export function Popover({
 
   return ReactDOM.createPortal(
     <div>
-      <Backdrop onClick={toggleFunction} mobileBreakpoint={mobileBreakpoint} />
+      <Backdrop
+        onClick={() => toggleFunction(false)}
+        mobileBreakpoint={mobileBreakpoint}
+      />
       {raised && trigger && (
         <div dangerouslySetInnerHTML={{ __html: triggerClone.outerHTML }} />
       )}
-      <Dialog
-        style={{ ...position, ...arrowStyles }}
+      <AnimatedDialog
+        style={{ ...position, ...arrowStyles, ...style }}
         role="dialog"
+        id={contentId}
         ref={dialogRef}
         arrow={arrow}
+        anchor={anchor}
         mobileBreakpoint={mobileBreakpoint}
       >
         {content}
-      </Dialog>
+      </AnimatedDialog>
     </div>,
     rootNode
   )
@@ -195,45 +205,103 @@ const PopoverAnchor = React.forwardRef(
       mobileBreakpoint = 520,
       arrow = true,
       placement = "bottom",
-      popoverId = "popover",
-      id = "popover-anchor",
+      contentId = "popover",
       ...props
     },
     ref
   ) => {
     const [showPopover, setShowPopover] = React.useState(false)
+    const transitions = useTransition(showPopover, null, {
+      from: {
+        "--transform": "translateY(-20px)",
+        "--mobile-transform": "translateY(100vh)",
+        opacity: 0
+      },
+      enter: {
+        "--transform": "translateY(0px)",
+        "--mobile-transform": "translateY(0px)",
+        opacity: 1
+      },
+      leave: {
+        "--transform": "translateY(-20px)",
+        "--mobile-transform": "translateY(100vh)",
+        opacity: 0
+      },
+      config: { mass: 1, tension: 280, friction: 30 }
+    })
     const triggerRef = useForwardedRef(ref)
 
     const handleTriggerClick = () => {
-      setShowPopover((current) => !current)
+      if (!showPopover) {
+        setShowPopover(true)
+      }
     }
+
+    // Handle Esc key
+    const escCb = React.useCallback(
+      (event) => {
+        if (event.key === "Escape" && showPopover) {
+          setShowPopover(false)
+        }
+      },
+      [showPopover]
+    )
+    // Handle light dismissal resize
+    const resizeCb = React.useCallback(() => {
+      setShowPopover(false)
+    }, [])
+
+    React.useEffect(() => {
+      window.addEventListener("keydown", escCb)
+      window.addEventListener("resize", resizeCb)
+      return () => {
+        window.removeEventListener("keydown", escCb)
+        window.removeEventListener("resize", resizeCb)
+      }
+    }, [escCb, resizeCb])
 
     return (
       <>
         <Component
           onClick={handleTriggerClick}
           ref={triggerRef}
-          aria-controls={popoverId}
+          aria-controls={contentId}
           aria-haspopup="dialog"
           aria-expanded={showPopover}
           {...props}
-          >
+        >
           {children}
         </Component>
-        {showPopover && (
-          <Popover
-            content={content}
-            toggleFunction={handleTriggerClick}
-            trigger={triggerRef.current}
-            arrow={arrow}
-            raised={raised}
-            mobileBreakpoint={mobileBreakpoint}
-            anchor={id}
-          />
-        )}
+        {transitions.map(({ item, key, props }) => {
+          return (
+            item && (
+              <Popover
+                content={content}
+                contentId={contentId}
+                toggleFunction={setShowPopover}
+                trigger={triggerRef.current}
+                arrow={arrow}
+                raised={raised}
+                mobileBreakpoint={mobileBreakpoint}
+                key={key}
+                style={props}
+              />
+            )
+          )
+        })}
       </>
     )
   }
 )
+
+PopoverAnchor.propTypes = {
+  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
+  raised: PropTypes.bool,
+  arrow: PropTypes.bool,
+  mobileBreakpoint: PropTypes.number,
+  placement: PropTypes.string,
+  contentId: PropTypes.string.isRequired,
+  content: PropTypes.node.isRequired,
+}
 
 export default PopoverAnchor
