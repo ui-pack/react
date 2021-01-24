@@ -8,7 +8,7 @@
     "test": "jest",
     "nyc": "nyc npm test",
     "coverage": "jest --coverage",
-    "build": "rollup -c"
+    "xbuild": "rollup -c"
   },
   "repository": {
     "type": "git",
