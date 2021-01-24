@@ -1,4 +1,5 @@
 import * as React from 'react'
+import ReactDOM from 'react-dom'
 import PropTypes from 'prop-types'
 import { useTransition, animated } from 'react-spring'
 import styled, { css } from 'styled-components'

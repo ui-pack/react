@@ -7,6 +7,7 @@ require('react');
 require('./index-9509e7a5.js');
 var masonry_index = require('./masonry/index.js');
 var infiniteScroll_index = require('./infinite-scroll/index.js');
+require('react-dom');
 require('@babel/runtime/helpers/esm/extends');
 require('@babel/runtime/helpers/esm/objectWithoutPropertiesLoose');
 var popover_index = require('./popover/index.js');

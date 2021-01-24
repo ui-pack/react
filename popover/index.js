@@ -5,6 +5,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 var _extends$1 = require('@babel/runtime/helpers/extends');
 var React = require('react');
 var index$1 = require('../index-9509e7a5.js');
+var ReactDOM = require('react-dom');
 var _extends = require('@babel/runtime/helpers/esm/extends');
 var _objectWithoutPropertiesLoose = require('@babel/runtime/helpers/esm/objectWithoutPropertiesLoose');
 
@@ -12,6 +13,7 @@ function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'defau
 
 var _extends__default$1 = /*#__PURE__*/_interopDefaultLegacy(_extends$1);
 var React__default = /*#__PURE__*/_interopDefaultLegacy(React);
+var ReactDOM__default = /*#__PURE__*/_interopDefaultLegacy(ReactDOM);
 var _extends__default = /*#__PURE__*/_interopDefaultLegacy(_extends);
 var _objectWithoutPropertiesLoose__default = /*#__PURE__*/_interopDefaultLegacy(_objectWithoutPropertiesLoose);
 
@@ -3452,7 +3454,7 @@ function Popover({
 
     setPosition(getDialogPosition(triggerRect.current, dialogRef.current));
   }, [trigger]);
-  return ReactDOM.createPortal( /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Backdrop, {
+  return /*#__PURE__*/ReactDOM__default['default'].createPortal( /*#__PURE__*/React.createElement("div", null, /*#__PURE__*/React.createElement(Backdrop, {
     onClick: () => toggleFunction(false),
     mobileBreakpoint: mobileBreakpoint
   }), raised && trigger && /*#__PURE__*/React.createElement("div", {

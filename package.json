@@ -1,6 +1,6 @@
 {
   "name": "@ui-pack/react",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "React ui-pack",
   "main": "index.js",
   "exports": "./src/components/index.js",
