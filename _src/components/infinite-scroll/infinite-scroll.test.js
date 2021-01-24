@@ -1,16 +1,14 @@
 import * as React from 'react'
 import { screen, render, waitFor } from '@testing-library/react'
-import "@testing-library/jest-dom/extend-expect"
-import fetch from "node-fetch"
-import { rest } from "msw"
-import { setupServer } from "msw/node"
+import { rest } from 'msw'
+import { setupServer } from 'msw/node'
 import InfiniteScroll from '.'
 
 const InfiniteScrollComponent = ({ requestPath, usePage, ...props}) => {
   const fetchImages = React.useMemo(() => page => {
     // use page # if provided, if set as boolean true, use the current page passed to callback
     const path = !usePage ? requestPath : typeof usePage === 'number' ? `${requestPath}?page=${usePage}` : `${requestPath}?page=${page}`
-    return fetch(`http://example.com${path}`).then(res => res.json())
+    return fetch(path).then(res => res.json())
   }, [requestPath, usePage])
 
   return (
@@ -22,7 +20,7 @@ const InfiniteScrollComponent = ({ requestPath, usePage, ...props}) => {
 
 describe('InfiniteScroll', () => {
   const server = setupServer(
-    rest.get('http://example.com/reindeers?page=1', (req, res, ctx) => {
+    rest.get('/reindeers?page=1', (req, res, ctx) => {
       return res(ctx.json([
         {id: 1, name: 'Dasher', skill: 'Sewing'},
         {id: 2, name: 'Dancer', skill: 'Dancing'},
@@ -31,7 +29,7 @@ describe('InfiniteScroll', () => {
         {id: 5, name: 'Comet', skill: 'Good with kids'},
       ]))
     }),
-    rest.get('http://example.com/reindeers?page=2', (req, res, ctx) => {
+    rest.get('/reindeers?page=2', (req, res, ctx) => {
       return res(ctx.json([
         {id: 6, name: 'Cupid', skill: 'Bringing people together'},
         {id: 7, name: 'Donner', skill: 'Singing'},
@@ -40,7 +38,7 @@ describe('InfiniteScroll', () => {
         {id: 10, name: 'Olive', skill: 'Good at hide-and-seek'},
       ]))
     }),
-    rest.get('http://example.com/elves?page=1', (req, res, ctx) => res(ctx.json([])))
+    rest.get('/elves?page=1', (req, res, ctx) => res(ctx.json([])))
   )
 
   beforeAll(() => server.listen())

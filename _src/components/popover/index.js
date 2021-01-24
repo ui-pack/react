@@ -1,43 +1,61 @@
-import React from "react"
-import styled, { css } from "styled-components"
+import * as React from 'react'
+import styled, { css } from 'styled-components'
 
 // animate option
-// placement (top, bottom)
-// update clone and popover position on resiz
+// placement (top, bottom, right, left)
+// update clone and popover position on resize
+// probably skip on handling resize because of light dismiss
+// as described here by open-ui https://open-ui.org/components/select#light-dismiss
+// and here by MsEdge https://github.com/MicrosoftEdge/MSEdgeExplainers/blob/main/Popup/explainer.md#light-dismiss
+// Light dismiss requires that
+// 1. Esc closes the dialog
+// 2. On blur of the window closes the dialog
+// 3. On resize closes the dialog (even though blur should before resize can happen)
 // https://codesandbox.io/s/flamboyant-sun-jyd1d?file=/src/App.js
+// KNOWN-ISSUES
+// 1. Default border color gets applied for arrow -> rgb(0,0,0) when none is set
+// 2. Firefox not grabbing computed border radius
 const Backdrop = styled.div`
   --opacity: 0;
-  ${({ mobileFriendly }) =>
-    mobileFriendly &&
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgb(0 0 0 / var(--opacity));
+  ${({ mobileBreakpoint }) =>
+    mobileBreakpoint &&
     css`
-      @media (max-width: 540px) {
+      @media (max-width: ${mobileBreakpoint}px) {
         --opacity: 0.1;
       }
     `}
-  position: fixed;
-  inset: 0;
-  background: rgb(0 0 0 / var(--opacity));
 `
 
+const dialogPseudoAfter = arrow => `
+  &::after {
+    content: "";
+    display: ${arrow ? 'block':'none'};
+    position: absolute;
+    top: -7.5px;
+    left: var(--left);
+    width: 15px;
+    height: 15px;
+    background: var(--arrowBg, #fff);
+    border-top: solid thin var(--arrowBorder, #ddd);
+    border-left: solid thin var(--arrowBorder, #ddd);
+    border-top-left-radius: var(--arrowRadius, 0);
+    transform: rotate(45deg);
+  }
+`
 const Dialog = styled.div`
   position: absolute;
-  ${({ mobileFriendly, arrow }) =>
-    mobileFriendly
+  ${({ mobileBreakpoint, arrow }) =>
+    mobileBreakpoint
       ? css`
           margin-top: ${arrow ? "12px" : 0};
-          &::after {
-            content: "";
-            position: absolute;
-            top: -7.5px;
-            left: calc(50% - 7.5px);
-            width: 15px;
-            height: 15px;
-            background: #fff;
-            border-top: solid thin #ddd;
-            border-left: solid thin #ddd;
-            transform: rotate(45deg);
-          }
-          @media (max-width: 540px) {
+          ${dialogPseudoAfter(arrow)}
+          @media (max-width: ${mobileBreakpoint}px) {
             width: 100%;
             bottom: 0;
             top: 100px !important;
@@ -72,20 +90,7 @@ const Dialog = styled.div`
         `
       : css`
           margin-top: ${arrow ? "12px" : 0};
-          &::after {
-            content: "";
-            display: ${arrow ? 'block':'none'};
-            position: absolute;
-            top: -7.5px;
-            left: var(--left);
-            width: 15px;
-            height: 15px;
-            background: var(--arrowBg, #fff);
-            border-top: solid thin var(--arrowBorder, #ddd);
-            border-left: solid thin var(--arrowBorder, #ddd);
-            border-top-left-radius: var(--arrowRadius, 0);
-            transform: rotate(45deg);
-          }
+          ${dialogPseudoAfter(arrow)}
         `}
 `
 
@@ -119,14 +124,14 @@ function getDialogPosition(triggerRect, dialog) {
   return { top, left }
 }
 
-function Popover({
+export function Popover({
   rootNodeSelector = "body",
   content,
   toggleFunction,
   trigger,
   arrow,
   raised,
-  mobileFriendly
+  mobileBreakpoint
 }) {
   const rootNode = document.querySelector(rootNodeSelector)
   const triggerRect = React.useRef({})
@@ -162,7 +167,7 @@ function Popover({
 
   return ReactDOM.createPortal(
     <div>
-      <Backdrop onClick={toggleFunction} mobileFriendly={mobileFriendly} />
+      <Backdrop onClick={toggleFunction} mobileBreakpoint={mobileBreakpoint} />
       {raised && trigger && (
         <div dangerouslySetInnerHTML={{ __html: triggerClone.outerHTML }} />
       )}
@@ -171,7 +176,7 @@ function Popover({
         role="dialog"
         ref={dialogRef}
         arrow={arrow}
-        mobileFriendly={mobileFriendly}
+        mobileBreakpoint={mobileBreakpoint}
       >
         {content}
       </Dialog>
@@ -180,16 +185,18 @@ function Popover({
   )
 }
 
-const PopoverTrigger = React.forwardRef(
+const PopoverAnchor = React.forwardRef(
   (
     {
       as: Component = "button",
       content,
       children,
       raised = false,
-      mobileFriendly = true,
+      mobileBreakpoint = 520,
       arrow = true,
       placement = "bottom",
+      popoverId = "popover",
+      id = "popover-anchor",
       ...props
     },
     ref
@@ -203,7 +210,14 @@ const PopoverTrigger = React.forwardRef(
 
     return (
       <>
-        <Component onClick={handleTriggerClick} ref={triggerRef} {...props}>
+        <Component
+          onClick={handleTriggerClick}
+          ref={triggerRef}
+          aria-controls={popoverId}
+          aria-haspopup="dialog"
+          aria-expanded={showPopover}
+          {...props}
+          >
           {children}
         </Component>
         {showPopover && (
@@ -213,7 +227,8 @@ const PopoverTrigger = React.forwardRef(
             trigger={triggerRef.current}
             arrow={arrow}
             raised={raised}
-            mobileFriendly={mobileFriendly}
+            mobileBreakpoint={mobileBreakpoint}
+            anchor={id}
           />
         )}
       </>
@@ -221,4 +236,4 @@ const PopoverTrigger = React.forwardRef(
   }
 )
 
-export default PopoverTrigger
+export default PopoverAnchor

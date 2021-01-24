@@ -16,27 +16,28 @@ export const arrayToColumns = (arr, cols) => {
 const Masonry = React.forwardRef(({
   as: Component = "div",
   columns,
-  gap = "1",
+  gap = "10px",
   children,
-  className = "",
   style,
   ...props
 }, ref) => {
   const childrenArray = React.Children.toArray(children)
   const transformed = arrayToColumns(childrenArray, Number(columns))
-  const classes = `grid gap-${gap} ${className}`
   const styles = {
+    display: 'grid',
     gridTemplateColumns: `repeat(${columns}, 1fr)`,
+    gap,
     ...style,
   }
+  // pass ref if using a DOM element
   const refProp = Component instanceof Function ? {} : { ref }
   return (
-    <Component {...props} className={classes} style={styles} {...refProp}>
+    <Component {...props} style={styles} {...refProp}>
       {transformed.map((elements, key) => (
         <div key={key}>
           {React.Children.map(elements, (element, index) => {
-            const topMargin = index === 0 ? index : gap
-            return <div className={`mb-0 mt-${topMargin}`}>{element}</div>
+            const marginTop = index === 0 ? index : gap
+            return <div style={{ marginTop, marginBottom: 0 }}>{element}</div>
           })}
         </div>
       ))}
