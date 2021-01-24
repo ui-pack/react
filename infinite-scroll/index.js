@@ -3,8 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
-require('../index-109aab05.js');
-var index = require('../index-394e2c20.js');
+var index = require('../index-9509e7a5.js');
 
 const getIsEnded = (currentPage, pageLimit, isLoading, error) => pageLimit && pageLimit === currentPage && !isLoading && !error;
 

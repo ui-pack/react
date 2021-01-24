@@ -1,6 +1,6 @@
 {
   "name": "@ui-pack/react",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "React ui-pack",
   "main": "index.js",
   "exports": "./src/components/index.js",
@@ -8,7 +8,7 @@
     "test": "jest",
     "nyc": "nyc npm test",
     "coverage": "jest --coverage",
-    "xbuild": "rollup -c"
+    "build": "rollup -c"
   },
   "repository": {
     "type": "git",
