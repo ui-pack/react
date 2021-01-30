@@ -308,7 +308,8 @@ PopoverAnchor.propTypes = {
   raised: PropTypes.bool,
   arrow: PropTypes.bool,
   mobileBreakpoint: PropTypes.number,
-  placement: PropTypes.string,
+  placement: PropTypes.oneOf(['bottom', 'top', 'left', 'right']),
+  align: PropTypes.oneOf(['start', 'end', 'center']),
   contentId: PropTypes.string.isRequired,
   content: PropTypes.node.isRequired,
 }

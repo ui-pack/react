@@ -9,7 +9,7 @@ const isEmpty = (items, isLoading, error) => !items.length && !isLoading && !err
 
 const InfiniteScroll = ({
   as: Component = "div",
-  loader = <div>Loading...</div>,
+  loadingMessage = <div>Loading...</div>,
   completionMessage = null,
   emptyMessage = null,
   errorMessage = null,
@@ -129,7 +129,7 @@ const InfiniteScroll = ({
   return (
     <>
       <Component {...parentProps}>{items.map(mapCallback)}</Component>
-      {isLoading && loader}
+      {isLoading && loadingMessage}
       {isEmpty(items, isLoading, error) && emptyMessage}
       {isEnded && completionMessage}
       {error && errorMessage}
@@ -139,7 +139,7 @@ const InfiniteScroll = ({
 
 InfiniteScroll.propTypes = {
   as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  loader: PropTypes.node,
+  loadingMessage: PropTypes.node,
   completionMessage: PropTypes.node,
   emptyMessage: PropTypes.node,
   errorMessage: PropTypes.node,

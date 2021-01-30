@@ -11,7 +11,6 @@ require('react-dom');
 require('@babel/runtime/helpers/esm/extends');
 require('@babel/runtime/helpers/esm/objectWithoutPropertiesLoose');
 var popover_index = require('./popover/index.js');
-require('./styled-components.esm-1652735d.js');
 
 
 

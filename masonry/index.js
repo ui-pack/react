@@ -27,7 +27,7 @@ const arrayToColumns = (arr, cols) => {
 };
 const Masonry = /*#__PURE__*/React.forwardRef(({
   as: Component = "div",
-  columns,
+  columns = 3,
   gap = "10px",
   children,
   style,
@@ -64,7 +64,6 @@ Masonry.propTypes = {
   gap: index.propTypes.oneOfType([index.propTypes.string, index.propTypes.number]),
   columns: index.propTypes.oneOfType([index.propTypes.string, index.propTypes.number]).isRequired,
   children: index.propTypes.node.isRequired,
-  className: index.propTypes.string,
   style: index.propTypes.object
 };
 

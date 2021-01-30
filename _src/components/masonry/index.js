@@ -15,7 +15,7 @@ export const arrayToColumns = (arr, cols) => {
 
 const Masonry = React.forwardRef(({
   as: Component = "div",
-  columns,
+  columns = 3,
   gap = "10px",
   children,
   style,
@@ -50,7 +50,6 @@ Masonry.propTypes = {
   gap: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
   columns: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
   children: PropTypes.node.isRequired,
-  className: PropTypes.string,
   style: PropTypes.object,
 }
 

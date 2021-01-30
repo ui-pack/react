@@ -11,7 +11,7 @@ const isEmpty = (items, isLoading, error) => !items.length && !isLoading && !err
 
 const InfiniteScroll = ({
   as: Component = "div",
-  loader = /*#__PURE__*/React.createElement("div", null, "Loading..."),
+  loadingMessage = /*#__PURE__*/React.createElement("div", null, "Loading..."),
   completionMessage = null,
   emptyMessage = null,
   errorMessage = null,
@@ -132,12 +132,12 @@ const InfiniteScroll = ({
       }
     };
   }, [scrollCb, scrollParentSelector]);
-  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Component, parentProps, items.map(mapCallback)), isLoading && loader, isEmpty(items, isLoading, error) && emptyMessage, isEnded && completionMessage, error && errorMessage);
+  return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Component, parentProps, items.map(mapCallback)), isLoading && loadingMessage, isEmpty(items, isLoading, error) && emptyMessage, isEnded && completionMessage, error && errorMessage);
 };
 
 InfiniteScroll.propTypes = {
   as: index.propTypes.oneOfType([index.propTypes.string, index.propTypes.func]),
-  loader: index.propTypes.node,
+  loadingMessage: index.propTypes.node,
   completionMessage: index.propTypes.node,
   emptyMessage: index.propTypes.node,
   errorMessage: index.propTypes.node,
