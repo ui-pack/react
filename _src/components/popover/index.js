@@ -15,6 +15,14 @@ import styled, { css } from 'styled-components'
 // KNOWN-ISSUES
 // 1. Default border color gets applied for arrow -> rgb(0,0,0) when none is set
 // 2. Firefox not grabbing computed border radius
+
+// raised: sending focus to the anchor does not close the popup
+// autofocus?
+// bring back handling ids
+// will the anchor attribute be any useful for non <popup> elements for library authors that try to implement this
+// with generic elements like <div>
+// test it works in modals
+// i.e it has context also of its modal parent container rather than just the window
 const Backdrop = styled.div`
   --opacity: 0;
   position: fixed;
@@ -66,9 +74,9 @@ const Dialog = styled.div`
             overflow-y: auto;
             transform: var(--mobile-transform);
             > * {
-              border: 0;
-              box-shadow: none;
-              outline: none;
+              border: 0 !important;
+              box-shadow: none !important;
+              outline: none !important;
               height: 100%;
             }
             &::before {

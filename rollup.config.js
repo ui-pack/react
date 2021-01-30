@@ -17,10 +17,9 @@ export default {
     /@testing-library/,
     /@babel\/runtime/
   ],
-  // Exempt test files
   input: [
-    // '_src/components/index.js',
-    '_src/components/**/*[!.test].js'
+    // Exempt files like example.stories.js and example.test.js
+    '_src/components/**/*[!.st].js'
   ],
   output: [
     {
