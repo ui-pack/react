@@ -50,8 +50,12 @@ const dialogPseudoAfter = (arrow) => `
     width: 15px;
     height: 15px;
     background: var(--arrowBg, #fff);
-    border-top: solid thin var(--arrowBorder, #ddd);
-    border-left: solid thin var(--arrowBorder, #ddd);
+    border-style: solid;
+    border-width: 0;
+    border-top-color: var(--arrowBorderColor, #ddd);
+    border-top-width: var(--arrowBorderWidth, 0);
+    border-left-color: var(--arrowBorderColor, #ddd);
+    border-left-width: var(--arrowBorderWidth, 0);
     border-top-left-radius: var(--arrowRadius, 0);
     transform: rotate(45deg);
   }
@@ -69,11 +73,12 @@ const Dialog = styled.div`
             bottom: 0;
             top: 200px !important;
             left: 0 !important;
-            border-radius: 40px 40px 0 0;
+            border-radius: 25px 25px 0 0;
             overflow-x: hidden;
             overflow-y: auto;
             transform: var(--mobile-transform);
             > * {
+              padding-top: 25px !important;
               border: 0 !important;
               box-shadow: none !important;
               outline: none !important;
@@ -169,8 +174,10 @@ export function Popover({
       setArrowStyles({
         "--arrowBg": window.getComputedStyle(dialogRef.current.firstChild)
           .backgroundColor,
-        "--arrowBorder": window.getComputedStyle(dialogRef.current.firstChild)
+        "--arrowBorderColor": window.getComputedStyle(dialogRef.current.firstChild)
           .borderColor,
+        "--arrowBorderWidth": window.getComputedStyle(dialogRef.current.firstChild)
+          .borderWidth,
         "--arrowRadius": window.getComputedStyle(dialogRef.current.firstChild)
           .borderRadius,
         "--left": "calc(50% - 7.5px)"

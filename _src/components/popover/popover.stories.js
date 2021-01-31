@@ -17,7 +17,7 @@ const PopoverContent = () => (
     backgroundColor: '#fafafa',
     boxShadow: '0 2px 5px rgb(0 0 0 /.1)'
     }}>
-    <h3>Well hello there!</h3>
+    <h3 style={{margin: 0}}>Well hello there!</h3>
     <p>Go on about your business</p>
   </div>
 )
