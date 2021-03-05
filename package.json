@@ -1,9 +1,11 @@
 {
   "name": "@ui-pack/react",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "React ui-pack",
   "main": "index.js",
-  "exports": "./src/components/index.js",
+  "exports": {
+    ".": "./"
+  },
   "scripts": {
     "test": "jest",
     "nyc": "nyc npm test",
@@ -31,6 +33,7 @@
   "homepage": "https://github.com/ui-pack/react#readme",
   "devDependencies": {
     "@babel/core": "^7.12.10",
+    "@babel/plugin-proposal-nullish-coalescing-operator": "^7.13.8",
     "@babel/plugin-transform-runtime": "^7.12.10",
     "@babel/preset-env": "^7.12.11",
     "@babel/preset-react": "^7.12.10",

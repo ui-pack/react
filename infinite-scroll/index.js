@@ -35,7 +35,7 @@ const InfiniteScroll = ({
   const position = React.useRef(0);
   const thresholdReached = React.useRef(false);
   const abortRequest = React.useRef(false);
-  const parentProps = innerProps ?? props;
+  const parentProps = innerProps !== null && innerProps !== void 0 ? innerProps : props;
   const isEnded = getIsEnded(page, pageLimit, isLoading, error);
   const scrollCb = React.useCallback(event => {
     const {
