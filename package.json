@@ -1,11 +1,8 @@
 {
   "name": "@ui-pack/react",
-  "version": "0.0.4",
+  "version": "0.0.5",
   "description": "React ui-pack",
   "main": "index.js",
-  "exports": {
-    ".": "./"
-  },
   "scripts": {
     "test": "jest",
     "nyc": "nyc npm test",
