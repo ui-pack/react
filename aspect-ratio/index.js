@@ -55,7 +55,7 @@ const AspectRatio = /*#__PURE__*/React.forwardRef(({
     as: as,
     ratio: ratio,
     ref: ref
-  }, props), children);
+  }, props), children && children);
 });
 
 exports.default = AspectRatio;

@@ -45,3 +45,12 @@ Landscape.args = {
   ratio: '1:1',
   text: 'Landscape - YouTube'
 }
+
+export const Image = (args) => (
+  <AspectRatio src="https://picsum.photos/400" {...args} />
+)
+Image.args = {
+  width: 200,
+  ratio: '1:1',
+  as: 'img'
+}

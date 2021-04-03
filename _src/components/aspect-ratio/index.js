@@ -34,7 +34,7 @@ const AspectRatio = React.forwardRef(
   ({ as = "div", ratio = "1:1", children, ...props }, ref) => {
     return (
       <Wrapper as={as} ratio={ratio} ref={ref} {...props}>
-        {children}
+        {children && children}
       </Wrapper>
     )
   }
