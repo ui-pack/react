@@ -4,7 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var _extends = require('@babel/runtime/helpers/extends');
 var React = require('react');
-var typable_cjs = require('../typable.cjs-d152a7e7.js');
+var typable_cjs = require('../typable.cjs-8aeba85a.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 

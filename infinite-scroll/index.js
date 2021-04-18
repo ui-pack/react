@@ -3,7 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
-var typable_cjs = require('../typable.cjs-d152a7e7.js');
+var typable_cjs = require('../typable.cjs-8aeba85a.js');
 
 const getIsEnded = (currentPage, pageLimit, isLoading, error) => pageLimit && pageLimit === currentPage && !isLoading && !error;
 

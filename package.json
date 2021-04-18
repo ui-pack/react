@@ -1,6 +1,6 @@
 {
   "name": "@ui-pack/react",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "React ui-pack",
   "main": "index.js",
   "scripts": {
@@ -58,6 +58,6 @@
     "react-spring": "^8.0.27",
     "react-use-gesture": "^9.0.0",
     "styled-components": "^5.2.1",
-    "typable-react": "^0.0.11"
+    "typable-react": "^0.0.12"
   }
 }
