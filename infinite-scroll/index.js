@@ -3,8 +3,7 @@
 Object.defineProperty(exports, '__esModule', { value: true });
 
 var React = require('react');
-require('../index-109aab05.js');
-var index = require('../index-394e2c20.js');
+var typable_cjs = require('../typable.cjs-d152a7e7.js');
 
 const getIsEnded = (currentPage, pageLimit, isLoading, error) => pageLimit && pageLimit === currentPage && !isLoading && !error;
 
@@ -136,21 +135,56 @@ const InfiniteScroll = ({
   return /*#__PURE__*/React.createElement(React.Fragment, null, /*#__PURE__*/React.createElement(Component, parentProps, items.map(mapCallback)), isLoading && loadingMessage, isEmpty(items, isLoading, error) && emptyMessage, isEnded && completionMessage, error && errorMessage);
 };
 
-InfiniteScroll.propTypes = {
-  as: index.propTypes.oneOfType([index.propTypes.string, index.propTypes.func]),
-  loadingMessage: index.propTypes.node,
-  completionMessage: index.propTypes.node,
-  emptyMessage: index.propTypes.node,
-  errorMessage: index.propTypes.node,
-  initialPage: index.propTypes.number,
-  loadFunction: index.propTypes.func.isRequired,
-  children: index.propTypes.func.isRequired,
-  onError: index.propTypes.func,
-  threshold: index.propTypes.number,
-  innerProps: index.propTypes.object,
-  pageLimit: index.propTypes.number,
-  scrollParentSelector: index.propTypes.string,
-  scrollContentSelector: index.propTypes.string
-};
+typable_cjs.typable_cjs(InfiniteScroll, {
+  as: {
+    type: typable_cjs.typable_cjs.oneOfType([typable_cjs.typable_cjs.string, typable_cjs.typable_cjs.func]),
+    default: 'div'
+  },
+  loadingMessage: {
+    type: typable_cjs.typable_cjs.node,
+    default: /*#__PURE__*/React.createElement("div", null, "Loading...")
+  },
+  completionMessage: {
+    type: typable_cjs.typable_cjs.node
+  },
+  emptyMessage: {
+    type: typable_cjs.typable_cjs.node
+  },
+  errorMessage: {
+    type: typable_cjs.typable_cjs.node
+  },
+  initialPage: {
+    type: typable_cjs.typable_cjs.number,
+    default: 1
+  },
+  loadFunction: {
+    type: typable_cjs.typable_cjs.func,
+    required: true
+  },
+  children: {
+    type: typable_cjs.typable_cjs.func,
+    required: true
+  },
+  onError: {
+    type: typable_cjs.typable_cjs.func
+  },
+  threshold: {
+    type: typable_cjs.typable_cjs.number,
+    default: 500
+  },
+  innerProps: {
+    type: typable_cjs.typable_cjs.object
+  },
+  pageLimit: {
+    type: typable_cjs.typable_cjs.number,
+    default: 1000
+  },
+  scrollParentSelector: {
+    type: typable_cjs.typable_cjs.string
+  },
+  scrollContentSelector: {
+    type: typable_cjs.typable_cjs.string
+  }
+});
 
 exports.default = InfiniteScroll;

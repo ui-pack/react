@@ -4,8 +4,7 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var _extends = require('@babel/runtime/helpers/extends');
 var React = require('react');
-require('../index-109aab05.js');
-var index = require('../index-394e2c20.js');
+var typable_cjs = require('../typable.cjs-d152a7e7.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -60,13 +59,29 @@ const Masonry = /*#__PURE__*/React.forwardRef(({
     }, element);
   }))));
 });
-Masonry.propTypes = {
-  as: index.propTypes.string,
-  gap: index.propTypes.oneOfType([index.propTypes.string, index.propTypes.number]),
-  columns: index.propTypes.oneOfType([index.propTypes.string, index.propTypes.number]).isRequired,
-  children: index.propTypes.node.isRequired,
-  style: index.propTypes.object
-};
+typable_cjs.typable_cjs(Masonry, {
+  as: {
+    type: typable_cjs.typable_cjs.oneOfType([typable_cjs.typable_cjs.string, typable_cjs.typable_cjs.func]),
+    default: 'div'
+  },
+  gap: {
+    type: typable_cjs.typable_cjs.oneOfType([typable_cjs.typable_cjs.string, typable_cjs.typable_cjs.number]),
+    default: 10
+  },
+  columns: {
+    type: typable_cjs.typable_cjs.oneOfType([typable_cjs.typable_cjs.string, typable_cjs.typable_cjs.number]),
+    required: true,
+    default: 3
+  },
+  children: {
+    type: typable_cjs.typable_cjs.node,
+    required: true
+  },
+  style: {
+    type: typable_cjs.typable_cjs.object,
+    description: 'CSS style for container'
+  }
+});
 
 exports.arrayToColumns = arrayToColumns;
 exports.default = Masonry;

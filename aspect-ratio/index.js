@@ -4,8 +4,8 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var _extends = require('@babel/runtime/helpers/extends');
 var React = require('react');
-require('../index-109aab05.js');
-var styledComponents_esm = require('../styled-components.esm-8cf632a7.js');
+var typable_cjs = require('../typable.cjs-d152a7e7.js');
+var styledComponents_esm = require('../styled-components.esm-80f941ab.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -56,6 +56,17 @@ const AspectRatio = /*#__PURE__*/React.forwardRef(({
     ratio: ratio,
     ref: ref
   }, props), children && children);
+});
+typable_cjs.typable_cjs(AspectRatio, {
+  as: {
+    type: typable_cjs.typable_cjs.oneOfType([typable_cjs.typable_cjs.string, typable_cjs.typable_cjs.func]),
+    default: 'div'
+  },
+  ratio: {
+    type: typable_cjs.typable_cjs.string,
+    required: true,
+    default: '1:1'
+  }
 });
 
 exports.default = AspectRatio;

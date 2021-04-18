@@ -1,6 +1,6 @@
 import * as React from 'react'
 import ReactDOM from 'react-dom'
-import PropTypes from 'prop-types'
+import typed from "typable-react"
 import { useTransition, animated } from 'react-spring'
 import styled, { css } from 'styled-components'
 
@@ -310,15 +310,39 @@ const PopoverAnchor = React.forwardRef(
   }
 )
 
-PopoverAnchor.propTypes = {
-  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  raised: PropTypes.bool,
-  arrow: PropTypes.bool,
-  mobileBreakpoint: PropTypes.number,
-  placement: PropTypes.oneOf(['bottom', 'top', 'left', 'right']),
-  align: PropTypes.oneOf(['start', 'end', 'center']),
-  contentId: PropTypes.string.isRequired,
-  content: PropTypes.node.isRequired,
-}
+typed(PopoverAnchor, {
+  as: {
+    type: typed.oneOfType([typed.string, typed.func]),
+    default: "button"
+  },
+  raised: {
+    type: typed.bool,
+    default: false
+  },
+  arrow: {
+    type: typed.bool,
+    default: true
+  },
+  mobileBreakpoint: {
+    type: typed.number,
+    default: 520
+  },
+  placement: {
+    type: typed.oneOf(['bottom', 'top', 'left', 'right']),
+    default: 'bottom'
+  },
+  align: {
+    type: typed.oneOf(['start', 'end', 'center'])
+  },
+  contentId: {
+    type: typed.string,
+    required: true,
+    default: 'popover'
+  },
+  content: {
+    type: typed.node,
+    required: true
+  },
+})
 
 export default PopoverAnchor

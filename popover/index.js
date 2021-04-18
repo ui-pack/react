@@ -4,12 +4,11 @@ Object.defineProperty(exports, '__esModule', { value: true });
 
 var _extends$1 = require('@babel/runtime/helpers/extends');
 var React = require('react');
-require('../index-109aab05.js');
-var index = require('../index-394e2c20.js');
+var typable_cjs = require('../typable.cjs-d152a7e7.js');
+var styledComponents_esm = require('../styled-components.esm-80f941ab.js');
 var ReactDOM = require('react-dom');
 var _extends = require('@babel/runtime/helpers/esm/extends');
 var _objectWithoutPropertiesLoose = require('@babel/runtime/helpers/esm/objectWithoutPropertiesLoose');
-var styledComponents_esm = require('../styled-components.esm-8cf632a7.js');
 
 function _interopDefaultLegacy (e) { return e && typeof e === 'object' && 'default' in e ? e : { 'default': e }; }
 
@@ -2060,16 +2059,40 @@ const PopoverAnchor = /*#__PURE__*/React.forwardRef(({
     });
   }));
 });
-PopoverAnchor.propTypes = {
-  as: index.propTypes.oneOfType([index.propTypes.string, index.propTypes.func]),
-  raised: index.propTypes.bool,
-  arrow: index.propTypes.bool,
-  mobileBreakpoint: index.propTypes.number,
-  placement: index.propTypes.oneOf(['bottom', 'top', 'left', 'right']),
-  align: index.propTypes.oneOf(['start', 'end', 'center']),
-  contentId: index.propTypes.string.isRequired,
-  content: index.propTypes.node.isRequired
-};
+typable_cjs.typable_cjs(PopoverAnchor, {
+  as: {
+    type: typable_cjs.typable_cjs.oneOfType([typable_cjs.typable_cjs.string, typable_cjs.typable_cjs.func]),
+    default: "button"
+  },
+  raised: {
+    type: typable_cjs.typable_cjs.bool,
+    default: false
+  },
+  arrow: {
+    type: typable_cjs.typable_cjs.bool,
+    default: true
+  },
+  mobileBreakpoint: {
+    type: typable_cjs.typable_cjs.number,
+    default: 520
+  },
+  placement: {
+    type: typable_cjs.typable_cjs.oneOf(['bottom', 'top', 'left', 'right']),
+    default: 'bottom'
+  },
+  align: {
+    type: typable_cjs.typable_cjs.oneOf(['start', 'end', 'center'])
+  },
+  contentId: {
+    type: typable_cjs.typable_cjs.string,
+    required: true,
+    default: 'popover'
+  },
+  content: {
+    type: typable_cjs.typable_cjs.node,
+    required: true
+  }
+});
 
 exports.Popover = Popover;
 exports.default = PopoverAnchor;

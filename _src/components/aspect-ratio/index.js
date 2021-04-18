@@ -1,5 +1,6 @@
 import * as React from 'react'
-import styled from "styled-components"
+import typed from 'typable-react'
+import styled from 'styled-components'
 
 const getRatio = ({ ratio }) => {
   const [antecedent, consequent] = ratio.split(":")
@@ -39,5 +40,17 @@ const AspectRatio = React.forwardRef(
     )
   }
 )
+
+typed(AspectRatio, {
+  as: {
+    type: typed.oneOfType([typed.string, typed.func]),
+    default: 'div'
+  },
+  ratio: {
+    type: typed.string,
+    required: true,
+    default: '1:1'
+  }
+})
 
 export default AspectRatio

@@ -1,5 +1,5 @@
 import * as React from 'react'
-import PropTypes from 'prop-types'
+import typed from "typable-react"
 
 const getIsEnded = (currentPage, pageLimit, isLoading, error) => (
   pageLimit && pageLimit === currentPage && !isLoading && !error
@@ -137,21 +137,56 @@ const InfiniteScroll = ({
   )
 }
 
-InfiniteScroll.propTypes = {
-  as: PropTypes.oneOfType([PropTypes.string, PropTypes.func]),
-  loadingMessage: PropTypes.node,
-  completionMessage: PropTypes.node,
-  emptyMessage: PropTypes.node,
-  errorMessage: PropTypes.node,
-  initialPage: PropTypes.number,
-  loadFunction: PropTypes.func.isRequired,
-  children: PropTypes.func.isRequired,
-  onError: PropTypes.func,
-  threshold: PropTypes.number,
-  innerProps: PropTypes.object,
-  pageLimit: PropTypes.number,
-  scrollParentSelector: PropTypes.string,
-  scrollContentSelector: PropTypes.string,
-}
+typed(InfiniteScroll, {
+  as: {
+    type: typed.oneOfType([typed.string, typed.func]),
+    default: 'div'
+  },
+  loadingMessage: {
+    type: typed.node,
+    default: <div>Loading...</div>
+  },
+  completionMessage: {
+    type: typed.node
+  },
+  emptyMessage: {
+    type: typed.node
+  },
+  errorMessage: {
+    type: typed.node
+  },
+  initialPage: {
+    type: typed.number,
+    default: 1,
+  },
+  loadFunction: {
+    type: typed.func,
+    required: true
+  },
+  children: {
+    type: typed.func,
+    required: true
+  },
+  onError: {
+    type: typed.func
+  },
+  threshold: {
+    type: typed.number,
+    default: 500,
+  },
+  innerProps: {
+    type: typed.object
+  },
+  pageLimit: {
+    type: typed.number,
+    default: 1000
+  },
+  scrollParentSelector: {
+    type: typed.string
+  },
+  scrollContentSelector: {
+    type: typed.string
+  },
+})
 
 export default InfiniteScroll

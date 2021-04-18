@@ -1,5 +1,5 @@
 import * as React from "react"
-import PropTypes from "prop-types"
+import typed from "typable-react"
 
 export const arrayToColumns = (arr, cols) => {
   const chunks = new Array(cols)
@@ -45,12 +45,28 @@ const Masonry = React.forwardRef(({
   )
 })
 
-Masonry.propTypes = {
-  as: PropTypes.string,
-  gap: PropTypes.oneOfType([PropTypes.string, PropTypes.number]),
-  columns: PropTypes.oneOfType([PropTypes.string, PropTypes.number]).isRequired,
-  children: PropTypes.node.isRequired,
-  style: PropTypes.object,
-}
+typed(Masonry, {
+  as: {
+    type: typed.oneOfType([typed.string, typed.func]),
+    default: 'div',
+  },
+  gap: {
+    type: typed.oneOfType([typed.string, typed.number]),
+    default: 10,
+  },
+  columns: {
+    type: typed.oneOfType([typed.string, typed.number]),
+    required: true,
+    default: 3,
+  },
+  children: {
+    type: typed.node,
+    required: true
+  },
+  style: {
+    type: typed.object,
+    description: 'CSS style for container'
+  }
+})
 
 export default Masonry

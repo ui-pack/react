@@ -42,6 +42,9 @@ describe('InfiniteScroll', () => {
   )
 
   beforeAll(() => server.listen())
+  beforeEach(() => {
+    jest.spyOn(console, "error").mockImplementation(() => {})
+  })
   // reset any request handlers that are declared as a part of our tests
   // (i.e. for testing one-time error scenarios)
   afterEach(() => server.resetHandlers())
