@@ -58,6 +58,6 @@
     "react-spring": "^8.0.27",
     "react-use-gesture": "^9.0.0",
     "styled-components": "^5.2.1",
-    "typable-react": "^0.0.12"
+    "typable-react": "^0.0.15"
   }
 }
